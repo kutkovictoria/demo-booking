@@ -1,17 +1,23 @@
 package ui.testing;
 
-import org.junit.jupiter.api.Assertions;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import po.HomePage;
+import po.LoginPage;
 
 public class LoginTest extends BaseTest{
-
     @Test
-    public void openHomePage(){
+    public void testLoginPage(){
         HomePage homePage = new HomePage();
         homePage.openHomePage();
-        String actualResult = homePage.getCopyRightText();
-        String expectedResult = "Copyright © 1996–2023 Booking.com™. All rights reserved.";
-        Assertions.assertEquals(expectedResult, actualResult);
+        homePage.clickSingInButton();
+
+        LoginPage loginPage = new LoginPage();
+        Faker faker = new Faker();
+        loginPage.enterEmail("test@st.com");
+        loginPage.clickContinueButton();
+
+        loginPage.enterPassword(faker.internet().password());
+        loginPage.clickContinueButton();
     }
 }
